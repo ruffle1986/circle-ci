@@ -6,4 +6,18 @@ deployment:
   production:
     branch: master
     commands:
-      - pwd
+      - npm prune --production
+      - npm dedupe
+      - npm version $(RELEASE_TYPE-patch)
+      - repo=https://$GITHUB_ACCESS_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git
+      - git push $repo master &> /dev/null; git push --tags $repo &> /dev/null
+      # gh-release parses this folder by default
+      - mkdir -p release
+      # archive the app (excluding git folder and using the package version)
+      - tar cvzp --exclude '.git' --exclude 'release'  -f "release/circleci-$(npv).tgz" .
+      # to get the version of the package
+      - npm i -g npv
+      # install gh-release package to upload the release to github
+      - curl -L https://github.com/progrium/gh-release/releases/download/v2.2.0/gh-release_2.2.0_linux_x86_64.tgz | tar xzf
+      # launch the release
+      - ./gh-release create $CIRCLE_PROJECT_USERNAME/CIRCLE_PROJECT_REPONAME $(npv)
