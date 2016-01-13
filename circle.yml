@@ -12,8 +12,8 @@ deployment:
       - git config --global user.name "ruffle1986"
       - repo=https://$GITHUB_ACCESS_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git
       - npm version $(RELEASE_TYPE-patch)
-      - git push $repo master &> /dev/null
-      - git push --follow-tags $repo &> /dev/null
+      - git push $repo master
+      - git push --follow-tags $repo
       # gh-release parses this folder by default
       - mkdir -p release
       # archive the app (excluding git folder and using the package version)
