@@ -2,21 +2,21 @@ machine:
   node:
     version: 4.2.1
 
+test:
+  post:
+    - >
+      if [ -n $RELEASE_TYPE ]; then
+        git config --global user.email "ftamas.mail@gmail.com"
+        git config --global user.name "ruffle1986"
+        npm version $RELEASE_TYPE;
+        repo=https://$GITHUB_ACCESS_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git;
+        git push $repo master &> /dev/null;
+        git push --tags $repo &> /dev/null;
+      fi
+
 deployment:
-  tagging:
-    branch: master
-    commands:
-      - >
-        if [ -n $RELEASE_TYPE ]; then
-          git config --global user.email "ftamas.mail@gmail.com"
-          git config --global user.name "ruffle1986"
-          npm version $RELEASE_TYPE;
-          repo=https://$GITHUB_ACCESS_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git;
-          git push $repo master &> /dev/null;
-          git push --tags $repo &> /dev/null;
-        fi
   release:
-    tag: /v.*/
+    tag: /v[0-9]+(\.[0-9]+)*/
     commands:
       - npm prune --production
       - npm dedupe
