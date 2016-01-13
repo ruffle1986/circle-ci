@@ -6,7 +6,7 @@ deployment:
   production:
     branch: master
     commands:
-      ->
+      - >
         if [ true ]; then
           repo=https://$GITHUB_ACCESS_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git
           echo $repo
