@@ -1,10 +1,6 @@
 machine:
   node:
     version: 4.2.1
-  pre:
-    # install gh-release package to upload the release to github
-    - curl -L -o gh-release_2.2.0_linux_x86_64.tgz https://github.com/progrium/gh-release/releases/download/v2.2.0/gh-release_2.2.0_linux_x86_64.tgz
-    - tar zxf gh-release_2.2.0_linux_x86_64.tgz
 
 deployment:
   production:
@@ -24,5 +20,8 @@ deployment:
       - tar cvzp --exclude '.git' --exclude 'release'  -f "release/circleci-$(npv).tgz" .
       # to get the version of the package
       - npm i -g npv
+      # install gh-release package to upload the release to github
+      - curl -L -o gh-release_2.2.0_linux_x86_64.tgz https://github.com/progrium/gh-release/releases/download/v2.2.0/gh-release_2.2.0_linux_x86_64.tgz
+      - tar zxf gh-release_2.2.0_linux_x86_64.tgz
       # launch the release
       - ./gh-release create $CIRCLE_PROJECT_USERNAME/CIRCLE_PROJECT_REPONAME $(npv)
