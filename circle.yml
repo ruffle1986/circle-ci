@@ -16,7 +16,6 @@ deployment:
           git push --tags $repo &> /dev/null;
         fi
   release:
-    branch: master
     tag: /v.*/
     commands:
       - npm prune --production
