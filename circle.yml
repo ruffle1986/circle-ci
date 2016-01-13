@@ -9,9 +9,8 @@ deployment:
       - npm prune --production
       - npm dedupe
       - npm version $(RELEASE_TYPE-patch)
-      - >
-        repo=https://$GITHUB_ACCESS_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git
-        echo $repo
+      - repo=https://$GITHUB_ACCESS_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git
+      - echo $repo
 
       # gh-release parses this folder by default
       - mkdir -p release
