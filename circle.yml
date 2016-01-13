@@ -18,16 +18,10 @@ deployment:
   release:
     tag: /v[0-9]+(\.[0-9]+)*/
     commands:
+      - git config --global user.email "ftamas.mail@gmail.com"
+      - git config --global user.name "ruffle1986"
       - npm prune --production
       - npm dedupe
-      # gh-release parses this folder by default
-      - mkdir -p release
-      # archive the app (excluding git folder and using the package version)
-      - tar cvzp --exclude '.git' --exclude 'release'  -f "release/circleci-$(npv).tgz" .
-      # to get the version of the package
-      - npm i -g npv
-      # install gh-release package to upload the release to github
-      - curl -L -o gh-release_2.2.0_linux_x86_64.tgz https://github.com/progrium/gh-release/releases/download/v2.2.0/gh-release_2.2.0_linux_x86_64.tgz
-      - tar zxf gh-release_2.2.0_linux_x86_64.tgz
-      # launch the release
-      - ./gh-release create ruffle1986/circle-ci $(npv)
+      - curl https://gist.githubusercontent.com/madbence/a67c19b9eaa46c3fc49c/raw/mk-release.sh > mk-release
+      - chmod 744 mk-release
+      - ./mk-release $CIRCLE_PROJECT_USERNAME $CIRCLE_PROJECT_REPONAME
