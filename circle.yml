@@ -8,10 +8,12 @@ deployment:
     commands:
       - npm prune --production
       - npm dedupe
-      - git config --global user.email "ftamas.mail@gmail.com"
-      - git config --global user.name "ruffle1986"
       - npm version $(RELEASE_TYPE-patch)
-      - repo=https://$GITHUB_ACCESS_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git git push $repo master && git push --tags $repo
+      - >
+        repo=https://$GITHUB_ACCESS_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git
+        git push $repo master
+        git push --tags $repo
+
       # gh-release parses this folder by default
       - mkdir -p release
       # archive the app (excluding git folder and using the package version)
