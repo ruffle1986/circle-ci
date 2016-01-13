@@ -1,11 +1,12 @@
 machine:
   node:
     version: 4.2.1
+  environment:
+    repo: https://$GITHUB_ACCESS_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git
 
 deployment:
   production:
     branch: master
     commands:
-      - repo=https://$GITHUB_ACCESS_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git
       - echo $repo
-      - echo pwd
+      - pwd
