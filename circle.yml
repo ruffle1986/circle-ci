@@ -1,12 +1,13 @@
 machine:
   node:
     version: 4.2.1
-  pre:
-    - curl -L -o gh-release_2.2.0_linux_x86_64.tgz https://github.com/progrium/gh-release/releases/download/v2.2.0/gh-release_2.2.0_linux_x86_64.tgz
-    - tar zxf gh-release_2.2.0_linux_x86_64.tgz
 
 deployment:
   production:
     branch: master
     commands:
-      - repo=https://$GITHUB_ACCESS_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git; echo $repo;
+      ->
+        if [ true ]; then
+          repo=https://$GITHUB_ACCESS_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git
+          echo $repo
+        fi
