@@ -11,7 +11,7 @@ deployment:
       - npm version $(RELEASE_TYPE-patch)
       - git config --global user.email "ftamas.mail@gmail.com"
       - git config --global user.name "ruffle1986"
-      - repo=git@github.com:$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git
+      - repo=https://$GITHUB_ACCESS_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git
       - git push $repo master &> /dev/null; git push --tags $repo &> /dev/null
       # gh-release parses this folder by default
       - mkdir -p release
